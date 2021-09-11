@@ -32,5 +32,34 @@ func hw() error {
     return nil
 }
 
+type Account struct {
+}
+
+func query(user string) (*Account, error) {
+    var (
+        err error
+        account *Account
+    )
+    // ...
+    // 查询数据，并接受错误
+    if err != nil {
+        if errors.Is(err, sql.ErrNoRows) {
+            // 接受的错误为 sql.ErrNoRows 时，
+            // 理解为无数据，而不是错误
+            // 此时通过数据对象为nil 提示调用方没有
+            // 查询到数据
+            return nil, nil
+        } else {
+            // ...
+            // 定位具体问题， 是否有容错处理
+            // 最后判断是否需要使用自定义错误上抛
+            return nil, err
+        }
+    }
+    // ...
+    // 收尾，并返回获取到的数据
+    return account, nil
+}
+
 func main() {
 }
