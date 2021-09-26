@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package log.v1;
+
+option go_package = "api/log/v1;log";
+
+message LogInRequest {
+    string key = 1;
+    string user_name = 2;
+    string password = 3;
+}
+
+message LogInResponse {
+    int32 status = 1;
+    string message = 2;
+    string cookie = 3;  
+}
+
+message LogOutRequest {
+    string key = 1;
+    string user_name = 2;
+    string cookie = 3;
+}
+
+message LogOutResponse {
+    int32 status = 1;
+    string message = 2;
+}
+
+message IsLogInRequest {
+    string user_name = 1;
+}
+
+message IsLogOutResponse {
+    int32 status = 1;
+    string message = 2;
+    bytes key = 3;
+}
+
+service LogService {
+    rpc LogIn(LogInRequest) returns (LogInResponse);
+    rpc LogOut(LogOutRequest) returns (LogOutResponse);
+    rpc IsLogIn(IsLogInRequest) returns (IsLogOutResponse);
+}
